@@ -1,6 +1,9 @@
-# README
+## Dependencies
+* ruby 2.4.1
+* rails 5.2.3
+* rspec 3.8.2
 
-Steps to setup rails app
+## Steps to setup rails app
 * `rails new <name> -T -d='postgresql' --skip-turbolinks --skip-spring`
 
 * Install the following gems:
@@ -66,3 +69,6 @@ RSpec.configure do |config|
 
 end
 ```
+
+* Setup database
+`rake db:create`
