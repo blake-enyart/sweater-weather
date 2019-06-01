@@ -72,3 +72,5 @@ end
 
 * Setup database
 `rake db:create`
+
+* Setup [Fast JSON API](https://github.com/Netflix/fast_jsonapi)

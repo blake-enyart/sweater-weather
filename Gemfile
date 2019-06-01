@@ -38,6 +38,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'factory_bot_rails'
 gem 'faker'
 gem 'faraday'
+gem 'fast_jsonapi'
 gem 'figaro'
 
 group :development, :test do
