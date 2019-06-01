@@ -58,10 +58,11 @@ end
 * Setup factory_bot_rails:
 ```ruby
 ...
-RSpec.configure do |config|
 
+RSpec.configure do |config|
   ...
+
   config.include FactoryBot::Syntax::Methods
-  ...
+
 end
 ```
