@@ -13,4 +13,9 @@ class WeatherService
       geocode.coordinates
     }
   end
+
+  def next_week
+    dark_sky = Clients::DarkSky.new(geocoded_location)
+    dark_sky.get_weather
+  end
 end
