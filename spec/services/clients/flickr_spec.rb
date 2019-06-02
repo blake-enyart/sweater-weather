@@ -4,6 +4,7 @@ describe Clients::Flickr do
   }
 
   it 'finds photos correctly' do
+    skip 'Should test with VCR'
     expected = {
                 "id": "33433751038",
                 "owner": "62401943@N06",

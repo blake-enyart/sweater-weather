@@ -1,5 +1,5 @@
 describe WeatherSerializer do
-  it 'returns data correctly from API call' do
-    skip "Need webmock to complete this"
+  it 'formats data received correctly' do
+    skip "Need webmock to mimic incoming weather data"
   end
 end

@@ -7,7 +7,7 @@ class Clients::DarkSky
   end
 
   def get_weather
-    Api::DarkSky.get_json(ENV['dark_sky_api_key'], latitude, longitude)
+    get_json(ENV['dark_sky_api_key'], latitude, longitude)
   end
 
   private

@@ -9,30 +9,14 @@ describe BackgroundService do
     BackgroundService.new(params[:location])
   }
 
-  it 'receives list of popular photos from flickr' do
-    expected = {
-                "photos": {
-                    "page": 1,
-                    "pages": 1009786,
-                    "perpage": 1,
-                    "total": "1009786",
-                    "photo": [
-                        {
-                            "id": "33433751038",
-                            "owner": "62401943@N06",
-                            "secret": "1ccce834d9",
-                            "server": "7884",
-                            "farm": 8,
-                            "title": "Denver skyline",
-                            "ispublic": 1,
-                            "isfriend": 0,
-                            "isfamily": 0
-                        }
-                    ]
-                },
-                "stat": "ok"
-            }
+  it 'returns attr correctly' do
+    expect(background.city).to eq('Denver')
+    expect(background.state).to eq('CO')
+  end
 
-    expect(background_service.get_photos).to eq(expected)
+  it 'receives list of popular photos from flickr' do
+    expected = 'https://farm8.staticflickr.com/7884/33433751038_1ccce834d9.jpg'
+
+    expect(background_service.get_photo_url).to eq(expected)
   end
 end
