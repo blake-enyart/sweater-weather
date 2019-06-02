@@ -8,7 +8,7 @@ describe 'Forecast API' do
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    expect(parsed[:latitude]).to eq('39.7392358')
-    expect(parsed[:longitude]).to eq('-104.990251')
+    expect(parsed[:latitude]).to eq(39.7392358)
+    expect(parsed[:longitude]).to eq(-104.990251)
   end
 end
