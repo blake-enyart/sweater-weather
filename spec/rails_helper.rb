@@ -37,6 +37,8 @@ SimpleCov.start "rails" do
   add_filter '/jobs/'
   add_filter '/channels/'
   add_filter '/creators/'
+  add_filter '/mailers/'
+  add_filter '/models/concerns'
 end
 
 Shoulda::Matchers.configure do |config|
