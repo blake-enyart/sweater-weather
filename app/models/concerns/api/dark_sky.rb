@@ -3,6 +3,7 @@ module Api::DarkSky
 
     def self.conn
       Faraday.new('https://api.darksky.net/forecast/') do |f|
+        f.headers['Content-Type'] = 'application/json'
         f.adapter  Faraday.default_adapter
       end
     end
