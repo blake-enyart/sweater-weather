@@ -25,7 +25,7 @@ describe WeatherService do
 
   it 'returns correct keys from DarkSky API' do
     expected = [:latitude, :longitude, :timezone, :currently, :minutely,
-                :hourly, :daily, :flags, :offset]
+                :hourly, :daily, :alerts, :flags, :offset]
 
     expect(dark_sky_service.next_week.keys).to eq(expected)
   end
