@@ -73,4 +73,9 @@ end
 * Setup database
 `rake db:create`
 
-* Setup [Fast JSON API](https://github.com/Netflix/fast_jsonapi)
+## Gems to Read up on
+* [Faraday](https://github.com/lostisland/faraday)
+* [Fast JSON API](https://github.com/Netflix/fast_jsonapi)
+
+## Concepts I Learned about:
+* [Caching](https://www.sitepoint.com/speed-things-up-by-learning-about-caching-in-rails/)
