@@ -9,17 +9,16 @@ describe 'User API' do
     }
 
     page.driver.post('/api/v1/users', user_info)
-    page.driver.status_code.should eql 201
+
+    expect(page.driver.status_code).to eq(201)
+    api_key = Digest::SHA1.hexdigest(user_info[:email])
+    expected = JSON.generate({
+      "api_key": api_key
+    })
+
+    expect(page.driver.response.body).to eq(expected)
     user = User.last
 
     expect(user.email).to eq("whatever@example.com")
-    expect(user.password).to eq("password")
-
-    api_key = Digest::SHA1.hexdigest(user_info['email'])
-    expected = {
-      "api_key": api_key,
-    }
-
-    expect(response.body).to eq(expected)
   end
 end
