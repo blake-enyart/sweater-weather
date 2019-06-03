@@ -8,8 +8,8 @@ module Api::DarkSky
       end
     end
 
-    def get_json(key, latitude, longitude)
-      response = conn.get("#{key}/#{latitude},#{longitude}")
+    def get_json(latitude, longitude)
+      response = conn.get("#{ENV['dark_sky_api_key']}/#{latitude},#{longitude}")
       JSON.parse(response.body, symbolize_names: true)
     end
 end
