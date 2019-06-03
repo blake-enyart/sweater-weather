@@ -1,20 +1,22 @@
 class AntipodeService
-  def initialize(city)
-    city = city[0..3] + ' ' + city[4..-1]
-    city = city.titleize
-    @city = city
+  attr_reader :main_city
+
+  def initialize(main_city)
+    main_city = main_city[0..3] + ' ' + main_city[4..-1]
+    main_city = main_city.titleize
+    @main_city = main_city
   end
 
   def geocoded_location(city)
     city.coordinates
   end
 
-  def get_antipode_coordinates
-    Clients::Amypode.coordinates(geocoded_location(city))
+  def antipode_coordinates
+    Clients::Amypode.antipode_coordinates(geocoded_location(city))
   end
 
   def antipode_name
-    results = geocode.reverse_geocode(get_antipode)
+    results = city.reverse_geocode(antipode_coordinates)
     city = results[:results][0][:address_components][1][:long_name]
     country = results[:results][0][:address_components][2][:long_name]
     "#{city}, #{country}"
@@ -31,6 +33,6 @@ class AntipodeService
   end
 
   def city
-    @_city ||= Clients::GoogleMaps.new(city, nil)
+    @_city ||= Clients::GoogleMaps.new(main_city, nil)
   end
 end
