@@ -24,8 +24,14 @@ class AntipodeService
   end
 
   def antipode_weather
-    antipode_city.
-    require "pry"; binding.pry
+    dark_sky = Clients::DarkSky.new(antipode_location)
+    dark_sky.get_weather
+  end
+
+  def all_data
+    {antipode_weather: antipode_weather,
+     antipode_name: antipode_name,
+     main_city: main_city}
   end
 
   def antipode_city
