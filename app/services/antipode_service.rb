@@ -7,24 +7,24 @@ class AntipodeService
     @main_city = main_city
   end
 
-  def geocoded_location(city)
+  def geocoded_location
     city.coordinates
   end
 
-  def antipode_coordinates
-    Clients::Amypode.antipode_coordinates(geocoded_location(city))
+  def antipode_location
+    amypode = Clients::Amypode.new(geocoded_location)
+    amypode.antipode_coordinates
   end
 
   def antipode_name
-    results = city.reverse_geocode(antipode_coordinates)
+    results = city.reverse_geocode(antipode_location)
     city = results[:results][0][:address_components][1][:long_name]
     country = results[:results][0][:address_components][2][:long_name]
     "#{city}, #{country}"
   end
 
   def antipode_weather
-    antipode_city = Clients::GoogleMaps.new(antipode_name[0], antipode_name[1])
-    antipode_coordinates = antipode_city.coordinates
+    antipode_city.
     require "pry"; binding.pry
   end
 

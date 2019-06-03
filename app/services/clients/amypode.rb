@@ -2,17 +2,16 @@ class Clients::Amypode
   include Api::Amypode
 
   def initialize(coordinates)
-    @longitude = coordinates[:longitude]
-    @latitude = coordinates[:latitude]
+    @coordinates = coordinates
   end
 
-  def get_antipode_coordinates
-    results = get_json('antipodes', {lat: latitude, long: longitude})
+  def antipode_coordinates
+    results = get_json('antipodes', {lat: coordinates[:latitude], long: coordinates[:longitude]})
     {latitude: results[:data][:attributes][:lat],
     longitude: results[:data][:attributes][:long]}
   end
 
   private
 
-    attr_reader :longitude, :latitude
+    attr_reader :coordinates
 end

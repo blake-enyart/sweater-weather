@@ -10,7 +10,7 @@ describe AntipodeService do
   }
 
   it 'returns attr correctly' do
-    expect(antipode_service.city).to eq('Hong Kong')
+    expect(antipode_service.main_city).to eq('Hong Kong')
   end
 
   it 'gets coordinates based on city name' do
@@ -28,7 +28,7 @@ describe AntipodeService do
                 longitude: -65.8306389
             }
 
-    expect(antipode_service.get_antipode).to eq(expected)
+    expect(antipode_service.antipode_location).to eq(expected)
   end
 
   it 'get antipode name' do
