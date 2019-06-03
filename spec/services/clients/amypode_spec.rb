@@ -14,16 +14,10 @@ describe Clients::Amypode do
 
   it 'returns correct antipode coordinates' do
     expected = {
-        data: {
-            id: "1",
-            type: "antipode",
-            attributes: {
-                lat: -22.3193039,
-                long: -65.8306389
-            }
-        }
+        latitude: -22.3193039,
+        longitude: -65.8306389
     }
 
-    expect(amypode.get_antipode).to eq(expected)
+    expect(amypode.get_antipode_coordinates).to eq(expected)
   end
 end

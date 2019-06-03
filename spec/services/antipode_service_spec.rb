@@ -24,16 +24,16 @@ describe AntipodeService do
 
   it 'gets antipode coordinates based on city' do
     expected = {
-        "data": {
-            "id": "1",
-            "type": "antipode",
-            "attributes": {
-                "lat": -22.3193039,
-                "long": -65.8306389
+                latitude: -22.3193039,
+                longitude: -65.8306389
             }
-        }
-    }
 
     expect(antipode_service.get_antipode).to eq(expected)
+  end
+
+  it 'get antipode name' do
+    expected = "Jujuy, Argentina"
+
+    expect(antipode_service.antipode_name).to eq(expected)
   end
 end

@@ -6,6 +6,22 @@ describe 'Antipode API' do
 
     expect(response).to be_successful
 
-    expect(response).to be_instance_of(Hash)
+    expected = {
+        "data": [
+            {
+                "id": "1",
+                "type": "antipode",
+                "attributes": {
+                    "location_name": "Antipode City Name",
+                    "forecast": {
+                        "summary": "Mostly Cloudy",
+                        "current_temperature": "72",
+                    				},
+                "search_location": "Hong Kong"
+                }
+            }
+        ]
+    }
+    expect(response.body).to be(expected)
   end
 end

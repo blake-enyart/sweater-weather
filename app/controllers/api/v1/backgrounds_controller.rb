@@ -4,4 +4,3 @@ class Api::V1::BackgroundsController < ApplicationController
     render json: BackgroundSerializer.parse(background_service.get_photo_url)
   end
 end
-''

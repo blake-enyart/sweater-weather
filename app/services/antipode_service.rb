@@ -8,7 +8,6 @@ class AntipodeService
   end
 
   def geocoded_location
-    geocode = Clients::GoogleMaps.new(city, nil)
     Rails.cache.fetch(city) {
       geocode.coordinates
     }
@@ -16,6 +15,15 @@ class AntipodeService
 
   def get_antipode
     amypode = Clients::Amypode.new(geocoded_location)
-    amypode.get_antipode
+    amypode.get_antipode_coordinates
+  end
+
+  def antipode_name
+    antipode
+    .reverse_geocode
+  end
+
+  def geocode
+    @_geocode ||= Clients::GoogleMaps.new(city, nil)
   end
 end
