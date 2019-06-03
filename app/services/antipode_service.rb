@@ -1,6 +1,4 @@
 class AntipodeService
-  attr_reader :city
-
   def initialize(city)
     city = city[0..3] + ' ' + city[4..-1]
     city = city.titleize
@@ -8,14 +6,11 @@ class AntipodeService
   end
 
   def geocoded_location(city)
-    Rails.cache.fetch(city) {
-      city.coordinates
-    }
+    city.coordinates
   end
 
-  def get_antipode
-    amypode = Clients::Amypode.new(geocoded_location)
-    amypode.get_antipode_coordinates
+  def get_antipode_coordinates
+    Clients::Amypode.coordinates(geocoded_location(city))
   end
 
   def antipode_name
