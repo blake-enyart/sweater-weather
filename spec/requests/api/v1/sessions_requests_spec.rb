@@ -4,8 +4,8 @@ describe 'Sessions API' do
   it 'logins in a user via the API', type: :feature do
     user = create(:user)
     login_info = {
-      "email": "whatever@example.com",
-      "password": "password"
+      "email": user.email,
+      "password": user.password
     }
 
     page.driver.post('/api/v1/sessions', login_info)
