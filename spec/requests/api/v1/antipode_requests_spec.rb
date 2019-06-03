@@ -5,6 +5,7 @@ describe 'Antipode API' do
     get '/api/v1/antipode?loc=hongkong'
 
     expect(response).to be_successful
-    
+
+    expect(response).to be_instance_of(Hash)
   end
 end
