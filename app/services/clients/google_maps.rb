@@ -13,10 +13,9 @@ class Clients::GoogleMaps
     { longitude: longitude, latitude: latitude }
   end
 
-  def reverse_geocode
-    raw_coordinates = "#{coordinates[:latitude]},#{coordinates[:longitude]}"
-    response = get_json('geocode/json', city, state, {latlng: raw_coordinates})
-    require "pry"; binding.pry
+  def reverse_geocode(antipode_coordinates)
+    raw_coordinates = "#{antipode_coordinates[:latitude]},#{antipode_coordinates[:longitude]}"
+    get_json('geocode/json', {latlng: raw_coordinates})
   end
 
   private

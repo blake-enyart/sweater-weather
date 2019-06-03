@@ -19,8 +19,10 @@ class AntipodeService
   end
 
   def antipode_name
-    antipode
-    .reverse_geocode
+    results = geocode.reverse_geocode(get_antipode)
+    city = results[:results][0][:address_components][1][:long_name]
+    country = results[:results][0][:address_components][2][:long_name]
+    "#{city}, #{country}"
   end
 
   def geocode

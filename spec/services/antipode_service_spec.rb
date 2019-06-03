@@ -36,4 +36,7 @@ describe AntipodeService do
 
     expect(antipode_service.antipode_name).to eq(expected)
   end
+
+  it 'gets weather in antipode city' do
+  end
 end
