@@ -38,5 +38,7 @@ describe AntipodeService do
   end
 
   it 'gets weather in antipode city' do
+    antipode_service.antipode_weather
+
   end
 end

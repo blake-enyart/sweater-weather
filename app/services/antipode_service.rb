@@ -7,9 +7,9 @@ class AntipodeService
     @city = city
   end
 
-  def geocoded_location
+  def geocoded_location(city)
     Rails.cache.fetch(city) {
-      geocode.coordinates
+      city.coordinates
     }
   end
 
@@ -25,7 +25,17 @@ class AntipodeService
     "#{city}, #{country}"
   end
 
-  def geocode
-    @_geocode ||= Clients::GoogleMaps.new(city, nil)
+  def antipode_weather
+    antipode_city = Clients::GoogleMaps.new(antipode_name[0], antipode_name[1])
+    antipode_coordinates = antipode_city.coordinates
+    require "pry"; binding.pry
+  end
+
+  def antipode_city
+    @_antipode_city ||= Clients::GoogleMaps.new(antipode_name)
+  end
+
+  def city
+    @_city ||= Clients::GoogleMaps.new(city, nil)
   end
 end
