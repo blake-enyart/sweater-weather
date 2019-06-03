@@ -5,7 +5,7 @@ class Clients::Amypode
   end
 
   def get_antipode
-    get_json('antipodes', coordinates)
+    get_json('antipodes', {lat: latitude, long: longitude})
   end
 
   private
@@ -21,7 +21,6 @@ class Clients::Amypode
 
     def get_json(url, options)
       response = conn.get(url, options)
-      require "pry"; binding.pry
       JSON.parse(response.body, symbolize_names: true)
     end
 end
