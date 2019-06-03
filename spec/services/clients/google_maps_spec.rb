@@ -6,7 +6,6 @@ describe Clients::GoogleMaps do
   }
 
   it 'returns correct coordinates' do
-    skip 'Should test with VCR to ensure endpoint'
     expected = {
       latitude: 39.7392358,
       longitude: -104.990251

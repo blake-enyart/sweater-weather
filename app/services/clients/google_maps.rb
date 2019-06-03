@@ -7,7 +7,8 @@ class Clients::GoogleMaps
   end
 
   def coordinates
-    response = get_json('geocode/json', city, state)
+    address = {address: "#{city},+#{state}"}
+    response = get_json('geocode/json', address)
     latitude = response[:results][0][:geometry][:location][:lat]
     longitude = response[:results][0][:geometry][:location][:lng]
     { longitude: longitude, latitude: latitude }
