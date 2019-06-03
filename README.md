@@ -1,24 +1,81 @@
-# README
+## Dependencies
+* ruby 2.4.1
+* rails 5.2.3
+* rspec 3.8.2
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Steps to setup rails app
+* `rails new <name> -T -d='postgresql' --skip-turbolinks --skip-spring`
 
-Things you may want to cover:
+* Install the following gems:
+```ruby
+# Gemfile
+...
+gem 'factory_bot_rails'
+gem 'faker'
+gem 'faraday'
+gem 'figaro'
 
-* Ruby version
+group :development, :test do
+  gem 'awesome_print'
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'capybara'
+  gem 'capybara-email'
+  gem 'launchy'
+  gem 'pry'
+  gem 'rspec-rails', '~> 3.8'
+  gem 'shoulda-matchers'
+  gem 'simplecov'
+end
+```
 
-* System dependencies
+* Setup rspec:
+```
+bundle install
+rails g rspec:install
+```
 
-* Configuration
+* Add PR template in root with name `PULL_REQUEST_TEMPLATE.MD`
 
-* Database creation
+* Setup simplecov, shoulda-matchers, capybara-email outside of `Rails.config` block:
+```ruby
+# spec/rails_helper.rb
 
-* Database initialization
+require 'capybara/email/rspec'
+...
+SimpleCov.start "rails" do
+  add_filter '/controllers/'
+  add_filter '/helpers/'
+  add_filter '/jobs/'
+  add_filter '/channels/'
+  add_filter '/creators/'
+end
 
-* How to run the test suite
+Shoulda::Matchers.configure do |config|
+    config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+* Setup factory_bot_rails:
+```ruby
+...
 
-* Deployment instructions
+RSpec.configure do |config|
+  ...
 
-* ...
+  config.include FactoryBot::Syntax::Methods
+
+end
+```
+
+* Setup database
+`rake db:create`
+
+## Gems to Read up on
+* [Faraday](https://github.com/lostisland/faraday)
+* [Fast JSON API](https://github.com/Netflix/fast_jsonapi)
+
+## Concepts I Learned about:
+* [Caching](https://www.sitepoint.com/speed-things-up-by-learning-about-caching-in-rails/)
