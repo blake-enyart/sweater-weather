@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe Clients::DarkSky do
   let(:geocoded_location) {
     {

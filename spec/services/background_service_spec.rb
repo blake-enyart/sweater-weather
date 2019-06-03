@@ -10,8 +10,8 @@ describe BackgroundService do
   }
 
   it 'returns attr correctly' do
-    expect(background.city).to eq('Denver')
-    expect(background.state).to eq('CO')
+    expect(background_service.city).to eq('Denver')
+    expect(background_service.state).to eq('CO')
   end
 
   it 'receives list of popular photos from flickr' do

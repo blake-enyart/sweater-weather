@@ -1,3 +1,5 @@
+describe 'rails_helper'
+
 describe BackgroundSerializer do
   let(:data) {
     'https://farm8.staticflickr.com/7884/33433751038_1ccce834d9.jpg'

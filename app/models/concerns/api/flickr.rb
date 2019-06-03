@@ -9,6 +9,6 @@ module Api::Flickr
 
     def get_json(options)
       response = conn.get(url=nil, options)
-      JSON.parse(response, symbolize_names: true)
+      JSON.parse(response.body, symbolize_names: true)
     end
 end

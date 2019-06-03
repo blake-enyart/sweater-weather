@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe Clients::Flickr do
   let(:flickr) {
     Clients::Flickr.new('Denver', 'CO')

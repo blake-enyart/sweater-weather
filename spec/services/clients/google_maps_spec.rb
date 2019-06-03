@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe Clients::GoogleMaps do
   let(:geocode) {
     Clients::GoogleMaps.new('Denver', 'CO')
