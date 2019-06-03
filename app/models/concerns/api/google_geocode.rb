@@ -8,10 +8,8 @@ module Api::GoogleGeocode
       end
     end
 
-    def get_json(url, city, state)
-      response = conn.get(url) do |f|
-        f.params['address'] = "#{city},+#{state}"
-      end
+    def get_json(url, options)
+      response = conn.get(url, options)
       JSON.parse(response.body, symbolize_names: true)
     end
 end
