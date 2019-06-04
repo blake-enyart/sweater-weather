@@ -9,13 +9,17 @@ class WeatherService
 
   def geocoded_location
     geocode = Clients::GoogleMaps.new(city, state)
-    coordinates ||= geocode.coordinates
-    unless Location.find_by(latitude: coordinates[:latitude], longitude: coordinates[:longitude])
+    # check database for location first
+    location = Location.find_by(city: city, state: state)
+    if location
+      return { longitude: location.longitude, latitude: location.latitude }
+    else
+      coordinates ||= geocode.coordinates
       Location.create(city: city, state: state,
                       latitude: coordinates[:latitude],
                       longitude: coordinates[:longitude])
+      coordinates
     end
-    coordinates
   end
 
   def next_week
