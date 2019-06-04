@@ -57,10 +57,8 @@ describe 'Favorites API', type: :feature do
       credentials = {
         api_key: user.api_key
       }
-      page.driver.get('/api/v1/favorites', credentials) # Initial number of favorites
-      parsed = JSON.parse(page.driver.response.body, symbolize_names: true)
 
-      expect(parsed.count).to eq(3)
+      expect(user.locations.count).to eq(3)
 
       delete_info = {
         location: denver.id,
@@ -70,9 +68,12 @@ describe 'Favorites API', type: :feature do
 
       expect(page.driver.status_code).to eq(200)
 
-      parsed = JSON.parse(page.driver.response.body, symbolize_names: true)
+      user.reload
 
-      expect(parsed.count).to eq(2)
+      expect(user.locations.count).to eq(2)
+
+      parsed = 
+      expect(page.driver.response.body)
     end
   end
 
