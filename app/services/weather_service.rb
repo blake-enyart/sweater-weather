@@ -9,9 +9,13 @@ class WeatherService
 
   def geocoded_location
     geocode = Clients::GoogleMaps.new(city, state)
-    Rails.cache.fetch("#{city},#{state}") {
-      geocode.coordinates
-    }
+    coordinates ||= geocode.coordinates
+    unless Location.find_by(latitude: coordinates[:latitude], longitude: coordinates[:longitude])
+      Location.create(city: city, state: state,
+                      latitude: coordinates[:latitude],
+                      longitude: coordinates[:longitude])
+    end
+    coordinates
   end
 
   def next_week
