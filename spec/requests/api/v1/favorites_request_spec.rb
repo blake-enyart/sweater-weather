@@ -31,10 +31,11 @@ describe 'Favorites API', type: :feature do
     end
 
     it 'returns JSON with list of favorite cities and current weather', :vcr do
-      denver = create(:location, city: 'Denver', state: 'CO')
-      fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
-      boulder = create(:location, city: 'Boulder', state: 'CO')
-      rifle = create(:location, city: 'Rifle', state: 'CO')
+      # Must have fixed lat/long becuase they are used in URI path generation
+      denver = create(:location, city: 'Denver', state: 'CO', latitude: 25.111, longitude: 25.2222)
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 50.111, longitude: 50.2222)
+      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 75.111, longitude: 75.2222)
+      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 100.111, longitude: 100.2222)
       user.locations << [denver, fort_collins, boulder]
       credentials = {
         api_key: user.api_key
@@ -48,10 +49,11 @@ describe 'Favorites API', type: :feature do
     end
 
     it 'delete favorite city from list', :vcr do
-      denver = create(:location, city: 'Denver', state: 'CO')
-      fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
-      boulder = create(:location, city: 'Boulder', state: 'CO')
-      rifle = create(:location, city: 'Rifle', state: 'CO')
+      # Must have fixed lat/long becuase they are used in URI path generation
+      denver = create(:location, city: 'Denver', state: 'CO', latitude: 25.111, longitude: 25.2222)
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 50.111, longitude: 50.2222)
+      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 75.111, longitude: 75.2222)
+      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 100.111, longitude: 100.2222)
       user.locations << [denver, fort_collins, boulder]
 
       credentials = {
@@ -73,16 +75,12 @@ describe 'Favorites API', type: :feature do
       expect(user.locations.count).to eq(2)
 
       parsed = JSON.parse(page.driver.response.body, symbolize_names: true)
-      expected = [
-        {:location=>"Fort Collins,CO",
-         :today_forecast=>{:date=>"08:49 AM, 06/04", :summary=>"Clear", :icon=>"clear-day", :temperature=>70, :high=>80, :low=>54, :feels_like=>70, :humidity=>37, :visibility=>4.84, :uv_index=>3}
-        },
-        {:location=>"Boulder,CO",
-         :today_forecast=>{:date=>"08:49 AM, 06/04", :summary=>"Clear", :icon=>"clear-day", :temperature=>69, :high=>79, :low=>52, :feels_like=>69, :humidity=>45, :visibility=>6.01, :uv_index=>3}
-        }
-        ]
+      parsed_locations = parsed.map do |location_forecast|
+        location_forecast[:location]
+      end
+      expected = [ "Fort Collins,CO","Boulder,CO"]
 
-      expect(parsed).to eq(expected)
+      expect(parsed_locations).to eq(expected)
     end
   end
 
