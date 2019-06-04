@@ -38,8 +38,10 @@ describe AntipodeService do
   end
 
   it 'gets weather in antipode city' do
-    expected = ""
+    response = antipode_service.antipode_weather
+    expected = [:latitude, :longitude, :timezone, :currently, :hourly, 
+                :daily, :flags, :offset]
 
-    expect(antipode_service.antipode_weather).to eq(expected)
+    expect(response.keys).to eq(expected)
   end
 end

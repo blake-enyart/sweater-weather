@@ -18,6 +18,6 @@ describe Clients::Amypode do
         longitude: -65.8306389
     }
 
-    expect(amypode.get_antipode_coordinates).to eq(expected)
+    expect(amypode.antipode_coordinates).to eq(expected)
   end
 end
