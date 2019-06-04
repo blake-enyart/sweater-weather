@@ -7,7 +7,7 @@ describe 'User API' do
       "password": "password",
       "password_confirmation": "password"
     }
-
+    # converts user_info into JSON in the process
     page.driver.post('/api/v1/users', user_info)
 
     expect(page.driver.status_code).to eq(201)
