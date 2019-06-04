@@ -13,7 +13,7 @@ describe 'Favorites API', type: :feature do
         receive(:current_user).and_return(user)
     end
 
-    it 'adds favorited cities to user' do
+    it 'adds favorited cities to user', :vcr do
       favorited_city = {
         location: city.id,
         api_key: user.api_key
@@ -30,7 +30,22 @@ describe 'Favorites API', type: :feature do
       expect(user.locations.count).to eq(1)
     end
 
-    it 'returns JSON with list of favorite cities and weather' do
+    it 'returns JSON with list of favorite cities and current weather', :vcr do
+
+      denver = create(:location, city: 'Denver', state: 'CO')
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
+      boulder = create(:location, city: 'Boulder', state: 'CO')
+      rifle = create(:location, city: 'Rifle', state: 'CO')
+      user.locations << [denver, fort_collins, boulder]
+      credentials = {
+        api_key: user.api_key
+      }
+      page.driver.get('/api/v1/favorites', credentials)
+      expect(page.driver.status_code).to eq(200)
+      # Need to figure out how to test this...
+    end
+
+    it 'delete favorite city from list', :vcr do
       # file = File.open('./fixtures/favorite_locations.json')
       # stub_request(:get, "/api/v1/favorites").
       #   with(status: 200, body: file, headers: {})
@@ -50,7 +65,7 @@ describe 'Favorites API', type: :feature do
   end
 
   describe 'sad path' do
-    it 'renders 401 when user attempts to add city to another user' do
+    it 'renders 401 when user attempts to add city to another user', :vcr do
       user = create(:user)
       bad_user = create(:user)
       city = create(:location, city: 'Denver', state:'CO', latitude: 39.7392358, longitude: -104.990251)
@@ -65,7 +80,7 @@ describe 'Favorites API', type: :feature do
       expect(page.driver.status_code).to eq(401)
     end
 
-    it 'renders 401 when user lacks api key' do
+    it 'renders 401 when user lacks api key', :vcr do
       user = create(:user, api_key: nil)
       city = create(:location, city: 'Denver', state:'CO', latitude: 39.7392358, longitude: -104.990251)
       allow_any_instance_of(ApplicationController).to \
@@ -79,7 +94,7 @@ describe 'Favorites API', type: :feature do
       expect(page.driver.status_code).to eq(401)
     end
 
-    it 'renders 401 when bad user attempts to lookup another user favorites' do
+    it 'renders 401 when bad user attempts to lookup another user favorites', :vcr do
       user = create(:user)
       bad_user = create(:user)
       allow_any_instance_of(ApplicationController).to \
@@ -98,7 +113,7 @@ describe 'Favorites API', type: :feature do
       # Need to figure out how to test this...
     end
 
-    it 'renders 401 when user lacks api key and attempts to lookup favorites' do
+    it 'renders 401 when user lacks api key and attempts to lookup favorites', :vcr do
       user = create(:user, api_key: nil)
       allow_any_instance_of(ApplicationController).to \
         receive(:current_user).and_return(user)

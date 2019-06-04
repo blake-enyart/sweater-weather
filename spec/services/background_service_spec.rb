@@ -14,7 +14,7 @@ describe BackgroundService do
     expect(background_service.state).to eq('CO')
   end
 
-  it 'receives list of popular photos from flickr' do
+  it 'receives list of popular photos from flickr', :vcr do
     expected = 'https://farm8.staticflickr.com/7884/33433751038_1ccce834d9.jpg'
 
     expect(background_service.get_photo_url).to eq(expected)

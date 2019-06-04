@@ -5,13 +5,10 @@ describe Clients::GoogleMaps do
     Clients::GoogleMaps.new('Denver', 'CO')
   }
 
-  it 'returns correct coordinates' do
-    expected = {
-      latitude: 39.7392358,
-      longitude: -104.990251
-    }
+  it 'returns correct coordinates', :vcr do
     actual = geocode.coordinates
 
-    expect(actual).to eq(expected)
+    expect(actual[:latitude]).to be_instance_of(Float)
+    expect(actual[:longitude]).to be_instance_of(Float)
   end
 end

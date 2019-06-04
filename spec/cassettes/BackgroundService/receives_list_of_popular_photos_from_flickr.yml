@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.flickr.com/services/rest/?api_key=<flickr_api_key>&content_type=1&format=json&license=2,3,4,5,6,9&method=flickr.photos.search&nojsoncallback=1&per_page=1&safe_search=1&sort=relevance&tags=Denver,skyline,city
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '244'
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 04 Jun 2019 14:55:34 GMT
+      Server:
+      - Apache/2.4.39 (Ubuntu)
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 0e00e4a51244e3761dee356d1ed0bb6a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - e-p5BGSaJkEAOmVzFhcwUh0tajqo-OAkkX0XhlccAk8fPyJa8dE87Q==
+    body:
+      encoding: UTF-8
+      string: '{"photos":{"page":1,"pages":1009984,"perpage":1,"total":"1009984","photo":[{"id":"33433751038","owner":"62401943@N06","secret":"1ccce834d9","server":"7884","farm":8,"title":"Denver
+        skyline","ispublic":1,"isfriend":0,"isfamily":0}]},"stat":"ok"}'
+    http_version: 
+  recorded_at: Tue, 04 Jun 2019 14:55:11 GMT
+recorded_with: VCR 5.0.0

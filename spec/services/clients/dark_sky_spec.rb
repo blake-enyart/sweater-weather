@@ -12,7 +12,20 @@ describe Clients::DarkSky do
     Clients::DarkSky.new(geocoded_location)
   }
 
-  it 'gets weather correctly' do
-    skip "Need VCR to test syntax of response is correct"
+  it 'DarkSky API returns in correct syntax', :vcr do
+    actual = dark_sky.get_weather
+    expected = [:latitude, :longitude, :timezone, :currently, :minutely,
+                :hourly, :daily, :flags, :offset]
+
+    expect(actual.keys).to eq(expected)
+    expect(actual[:latitude]).to be_instance_of(Float)
+    expect(actual[:longitude]).to be_instance_of(Float)
+    expect(actual[:timezone]).to be_instance_of(String)
+    expect(actual[:currently]).to be_instance_of(Hash)
+    expect(actual[:minutely]).to be_instance_of(Hash)
+    expect(actual[:hourly]).to be_instance_of(Hash)
+    expect(actual[:daily]).to be_instance_of(Hash)
+    expect(actual[:flags]).to be_instance_of(Hash)
+    expect(actual[:offset]).to be_instance_of(Integer)
   end
 end

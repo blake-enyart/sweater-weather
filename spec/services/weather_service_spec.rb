@@ -5,31 +5,24 @@ describe WeatherService do
     {location: 'denver,co'}
   }
 
-  let(:dark_sky_service) {
+  let(:weather_service) {
     WeatherService.new(params[:location])
   }
 
   it 'returns attr correctly' do
-    expect(dark_sky_service.city).to eq('Denver')
-    expect(dark_sky_service.state).to eq('CO')
+    expect(weather_service.city).to eq('Denver')
+    expect(weather_service.state).to eq('CO')
   end
 
-  it 'returns correct latitude and logitude from Geocoding API' do
+  it 'returns correct coordinates from Geocoding API', :vcr do
     expected = {
       latitude: 39.7392358,
       longitude: -104.990251
     }
-    actual = dark_sky_service.geocoded_location
+    actual = weather_service.geocoded_location
 
     expect(actual).to eq(expected)
   end
 
-  it 'returns correct keys from DarkSky API' do
-    skip 'Need webmock to mock up the DarkSky API response'
-    actual = dark_sky_service.next_week
-    
-    expect(actual).to eq(expected)
-  end
-
-
+  # I think I need to test the next week component, but don't know how
 end
