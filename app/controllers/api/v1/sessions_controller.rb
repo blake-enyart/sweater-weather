@@ -9,7 +9,7 @@ class Api::V1::SessionsController < ApplicationController
       }
     else
       flash[:error] = 'Your credentials are incorrect.'
-      render :new # need to build this out
+      render :new # need to build this view out
     end
   end
 end
