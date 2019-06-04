@@ -31,7 +31,6 @@ describe 'Favorites API', type: :feature do
     end
 
     it 'returns JSON with list of favorite cities and current weather', :vcr do
-
       denver = create(:location, city: 'Denver', state: 'CO')
       fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
       boulder = create(:location, city: 'Boulder', state: 'CO')
@@ -41,26 +40,39 @@ describe 'Favorites API', type: :feature do
         api_key: user.api_key
       }
       page.driver.get('/api/v1/favorites', credentials)
+
       expect(page.driver.status_code).to eq(200)
-      # Need to figure out how to test this...
+      parsed = JSON.parse(page.driver.response.body, symbolize_names: true)
+
+      expect(parsed.count).to eq(3)
     end
 
     it 'delete favorite city from list', :vcr do
-      # file = File.open('./fixtures/favorite_locations.json')
-      # stub_request(:get, "/api/v1/favorites").
-      #   with(status: 200, body: file, headers: {})
-
       denver = create(:location, city: 'Denver', state: 'CO')
       fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
       boulder = create(:location, city: 'Boulder', state: 'CO')
       rifle = create(:location, city: 'Rifle', state: 'CO')
       user.locations << [denver, fort_collins, boulder]
+
       credentials = {
         api_key: user.api_key
       }
-      page.driver.get('/api/v1/favorites', credentials)
+      page.driver.get('/api/v1/favorites', credentials) # Initial number of favorites
+      parsed = JSON.parse(page.driver.response.body, symbolize_names: true)
+
+      expect(parsed.count).to eq(3)
+
+      delete_info = {
+        location: denver.id,
+        api_key: user.api_key
+      }
+      page.driver.delete('/api/v1/favorites', delete_info)
+
       expect(page.driver.status_code).to eq(200)
-      # Need to figure out how to test this...
+
+      parsed = JSON.parse(page.driver.response.body, symbolize_names: true)
+
+      expect(parsed.count).to eq(2)
     end
   end
 
