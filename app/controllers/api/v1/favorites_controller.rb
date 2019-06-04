@@ -16,4 +16,14 @@ class Api::V1::FavoritesController < ApplicationController
       render status: 401, json: {}
     end
   end
+
+  def destroy
+    if (current_user.api_key == params[:api_key]) && params[:api_key]
+      favorite_location = FavoriteLocation.find_by(user_id: current_user.id, location_id: params[:location])
+      favorite_location.delete
+      render status: 200, json: FavoriteSerializer.parse(current_user.fav_city_names)
+    else
+      render status: 401, json: {}
+    end
+  end
 end

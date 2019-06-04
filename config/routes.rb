@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create ]
       resources :sessions, only: [:create]
       resources :favorites, only: [:create,:index]
+      delete 'favorites', to: 'favorites#destroy'
     end
   end
 end
