@@ -11,6 +11,5 @@ class FavoriteSerializer
       weather_data << hash
     end
     weather_data
-    require "pry"; binding.pry
   end
 end

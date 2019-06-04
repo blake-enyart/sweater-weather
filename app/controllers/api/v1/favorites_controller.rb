@@ -11,7 +11,7 @@ class Api::V1::FavoritesController < ApplicationController
 
   def index
     if (current_user.api_key == params[:api_key]) && params[:api_key]
-      render status: 201, json: FavoriteSerializer.parse(current_user.fav_city_names)
+      render status: 200, json: FavoriteSerializer.parse(current_user.fav_city_names)
     else
       render status: 401, json: {}
     end
