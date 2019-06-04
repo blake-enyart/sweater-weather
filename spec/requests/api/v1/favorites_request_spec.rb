@@ -72,8 +72,17 @@ describe 'Favorites API', type: :feature do
 
       expect(user.locations.count).to eq(2)
 
-      parsed = 
-      expect(page.driver.response.body)
+      parsed = JSON.parse(page.driver.response.body, symbolize_names: true)
+      expected = [
+        {:location=>"Fort Collins,CO",
+         :today_forecast=>{:date=>"08:49 AM, 06/04", :summary=>"Clear", :icon=>"clear-day", :temperature=>70, :high=>80, :low=>54, :feels_like=>70, :humidity=>37, :visibility=>4.84, :uv_index=>3}
+        },
+        {:location=>"Boulder,CO",
+         :today_forecast=>{:date=>"08:49 AM, 06/04", :summary=>"Clear", :icon=>"clear-day", :temperature=>69, :high=>79, :low=>52, :feels_like=>69, :humidity=>45, :visibility=>6.01, :uv_index=>3}
+        }
+        ]
+
+      expect(parsed).to eq(expected)
     end
   end
 
@@ -142,6 +151,47 @@ describe 'Favorites API', type: :feature do
       page.driver.get('/api/v1/favorites', credentials)
       expect(page.driver.status_code).to eq(401)
       # Need to figure out how to test this...
+    end
+
+    it "renders 401 when bad user attempts to delete another user's favorites", :vcr do
+      user = create(:user)
+      bad_user = create(:user)
+      allow_any_instance_of(ApplicationController).to \
+        receive(:current_user).and_return(bad_user)
+
+      denver = create(:location, city: 'Denver', state: 'CO')
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
+      boulder = create(:location, city: 'Boulder', state: 'CO')
+      rifle = create(:location, city: 'Rifle', state: 'CO')
+      user.locations << [denver, fort_collins, boulder]
+
+      delete_info = {
+        location: denver.id,
+        api_key: user.api_key
+      }
+      page.driver.delete('/api/v1/favorites', delete_info)
+
+      expect(page.driver.status_code).to eq(401)
+    end
+
+    it "renders 401 when user lacks api key and tries to delete favorites", :vcr do
+      user = create(:user, api_key: nil)
+      allow_any_instance_of(ApplicationController).to \
+        receive(:current_user).and_return(user)
+
+      denver = create(:location, city: 'Denver', state: 'CO')
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
+      boulder = create(:location, city: 'Boulder', state: 'CO')
+      rifle = create(:location, city: 'Rifle', state: 'CO')
+      user.locations << [denver, fort_collins, boulder]
+
+      delete_info = {
+        location: denver.id,
+        api_key: user.api_key
+      }
+      page.driver.delete('/api/v1/favorites', delete_info)
+
+      expect(page.driver.status_code).to eq(401)
     end
   end
 end
