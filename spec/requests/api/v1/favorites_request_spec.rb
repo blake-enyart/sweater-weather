@@ -27,10 +27,10 @@ describe 'Favorites API' do
 
     it 'returns JSON with list of favorite cities and current weather', :vcr do
       # Must have fixed lat/long becuase they are used in URI path generation
-      denver = create(:location, city: 'Denver', state: 'CO', latitude: 25.111, longitude: 25.2222)
-      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 50.111, longitude: 50.2222)
-      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 75.111, longitude: 75.2222)
-      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 100.111, longitude: 100.2222)
+      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
       credentials = {
         api_key: user.api_key
@@ -45,10 +45,10 @@ describe 'Favorites API' do
 
     it 'delete favorite city from list', :vcr do
       # Must have fixed lat/long becuase they are used in URI path generation
-      denver = create(:location, city: 'Denver', state: 'CO', latitude: 25.111, longitude: 25.2222)
-      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 50.111, longitude: 50.2222)
-      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 75.111, longitude: 75.2222)
-      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 100.111, longitude: 100.2222)
+      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
 
       credentials = {
@@ -108,10 +108,10 @@ describe 'Favorites API' do
 
     it 'renders 401 when attempt to lookup user favorites with wrong key', :vcr do
       user = create(:user)
-      denver = create(:location, city: 'Denver', state: 'CO')
-      fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
-      boulder = create(:location, city: 'Boulder', state: 'CO')
-      rifle = create(:location, city: 'Rifle', state: 'CO')
+      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
       credentials = {
         api_key: 'wrongkey'
@@ -123,10 +123,10 @@ describe 'Favorites API' do
 
     it 'renders 401 when user lacks api key and attempts to lookup favorites', :vcr do
       user = create(:user, api_key: nil)
-      denver = create(:location, city: 'Denver', state: 'CO')
-      fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
-      boulder = create(:location, city: 'Boulder', state: 'CO')
-      rifle = create(:location, city: 'Rifle', state: 'CO')
+      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
       credentials = {
         api_key: user.api_key
@@ -138,10 +138,10 @@ describe 'Favorites API' do
 
     it "renders 401 when bad user attempts to delete another user's favorites", :vcr do
       user = create(:user)
-      denver = create(:location, city: 'Denver', state: 'CO')
-      fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
-      boulder = create(:location, city: 'Boulder', state: 'CO')
-      rifle = create(:location, city: 'Rifle', state: 'CO')
+      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
 
       delete_info = {
@@ -155,10 +155,10 @@ describe 'Favorites API' do
 
     it "renders 401 when user lacks api key and tries to delete favorites", :vcr do
       user = create(:user, api_key: nil)
-      denver = create(:location, city: 'Denver', state: 'CO')
-      fort_collins = create(:location, city: 'Fort Collins', state: 'CO')
-      boulder = create(:location, city: 'Boulder', state: 'CO')
-      rifle = create(:location, city: 'Rifle', state: 'CO')
+      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
 
       delete_info = {

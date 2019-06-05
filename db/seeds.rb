@@ -11,8 +11,8 @@ Location.destroy_all
 
 user = User.create(email: 'test@gmail.com', password: 'password', api_key: 'test')
 
-denver = Location.create(city: 'Denver', state: 'CO', latitude: 25.111, longitude: 25.2222)
-fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 50.111, longitude: 50.2222)
-boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 75.111, longitude: 75.2222)
-rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 100.111, longitude: 100.2222)
+denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
 user.locations << [denver, fort_collins, boulder]
