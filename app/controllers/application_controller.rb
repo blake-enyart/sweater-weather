@@ -1,5 +1,3 @@
 class ApplicationController < ActionController::Base
-  def current_user
-    User.find_by(api_key: session[:api_key])
-  end
+  protect_from_forgery with: :null_session
 end
