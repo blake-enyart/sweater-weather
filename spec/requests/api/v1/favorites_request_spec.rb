@@ -10,8 +10,12 @@ describe 'Favorites API' do
     }
 
     it 'adds favorited cities to user', :vcr do
+      denver = create(:location, city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       favorited_city = {
-        location: city.id,
+        location: "Denver, CO",
         api_key: user.api_key
       }
 
@@ -27,10 +31,10 @@ describe 'Favorites API' do
 
     it 'returns JSON with list of favorite cities and current weather', :vcr do
       # Must have fixed lat/long becuase they are used in URI path generation
-      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
-      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
-      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
-      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
+      denver = create(:location, city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
       credentials = {
         api_key: user.api_key
@@ -45,10 +49,10 @@ describe 'Favorites API' do
 
     it 'delete favorite city from list', :vcr do
       # Must have fixed lat/long becuase they are used in URI path generation
-      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
-      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
-      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
-      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
+      denver = create(:location, city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
 
       credentials = {
@@ -58,7 +62,7 @@ describe 'Favorites API' do
       expect(user.locations.count).to eq(3)
 
       delete_info = {
-        location: denver.id,
+        location: 'Denver, CO',
         api_key: user.api_key
       }
       delete '/api/v1/favorites', as: :json, params: delete_info
@@ -80,11 +84,11 @@ describe 'Favorites API' do
   end
 
   describe 'sad path' do
-    it 'renders 401 when api key not in database', :vcr do
+    it 'renders 401 when api key not in database and want to create', :vcr do
       user = create(:user)
       city = create(:location, city: 'Denver', state:'CO', latitude: 39.7392358, longitude: -104.990251)
       favorited_city = {
-        location: city.id,
+        location: 'Denver, CO',
         api_key: 'wrongkey'
       }
 
@@ -93,11 +97,11 @@ describe 'Favorites API' do
       expect(response.status).to eq(401)
     end
 
-    it 'renders 401 when user lacks api key', :vcr do
+    it 'renders 401 when user lacks api key and want to create', :vcr do
       user = create(:user, api_key: nil)
       city = create(:location, city: 'Denver', state:'CO', latitude: 39.7392358, longitude: -104.990251)
       favorited_city = {
-        location: city.id,
+        location: 'Denver, CO',
         api_key: user.api_key
       }
 
@@ -108,10 +112,10 @@ describe 'Favorites API' do
 
     it 'renders 401 when attempt to lookup user favorites with wrong key', :vcr do
       user = create(:user)
-      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
-      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
-      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
-      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
+      denver = create(:location, city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
       credentials = {
         api_key: 'wrongkey'
@@ -123,10 +127,10 @@ describe 'Favorites API' do
 
     it 'renders 401 when user lacks api key and attempts to lookup favorites', :vcr do
       user = create(:user, api_key: nil)
-      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
-      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
-      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
-      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
+      denver = create(:location, city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
       credentials = {
         api_key: user.api_key
@@ -138,14 +142,14 @@ describe 'Favorites API' do
 
     it "renders 401 when bad user attempts to delete another user's favorites", :vcr do
       user = create(:user)
-      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
-      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
-      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
-      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
+      denver = create(:location, city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
 
       delete_info = {
-        location: denver.id,
+        location: 'Denver, CO',
         api_key: 'wrongkey'
       }
       delete '/api/v1/favorites', as: :json, params: delete_info
@@ -155,14 +159,14 @@ describe 'Favorites API' do
 
     it "renders 401 when user lacks api key and tries to delete favorites", :vcr do
       user = create(:user, api_key: nil)
-      denver = Location.create(city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
-      fort_collins = Location.create(city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
-      boulder = Location.create(city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
-      rifle = Location.create(city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
+      denver = create(:location, city: 'Denver', state: 'CO', latitude: 39.742043, longitude: -104.991531)
+      fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 40.585258, longitude: -105.084419)
+      boulder = create(:location, city: 'Boulder', state: 'CO', latitude: 40.014984, longitude: -105.270546)
+      rifle = create(:location, city: 'Rifle', state: 'CO', latitude: 39.534702, longitude: -107.783119)
       user.locations << [denver, fort_collins, boulder]
 
       delete_info = {
-        location: denver.id,
+        location: 'Denver, CO',
         api_key: user.api_key
       }
 

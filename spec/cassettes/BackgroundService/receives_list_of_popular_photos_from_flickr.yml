@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.flickr.com/services/rest/?api_key=<flickr_api_key>&content_type=1&format=json&license=2,3,4,5,6,9&method=flickr.photos.search&nojsoncallback=1&per_page=1&safe_search=1&sort=relevance&tags=Denver,skyline,city
+    uri: https://api.flickr.com/services/rest/?api_key=<flickr_api_key>&content_type=1&format=json&license=2,3,4,5,6,9&method=flickr.photos.search&nojsoncallback=1&per_page=1&safe_search=1&sort=relevance&tags=Denver,CO,skyline,city
     body:
       encoding: US-ASCII
       string: ''
@@ -23,11 +23,11 @@ http_interactions:
       Content-Type:
       - application/json
       Content-Length:
-      - '244'
+      - '252'
       Connection:
       - keep-alive
       Date:
-      - Tue, 04 Jun 2019 19:17:49 GMT
+      - Wed, 05 Jun 2019 16:43:53 GMT
       Server:
       - Apache/2.4.39 (Ubuntu)
       X-Content-Type-Options:
@@ -37,13 +37,13 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 627bd3ccf992ce79999b331b1a9d283d.cloudfront.net (CloudFront)
+      - 1.1 4f207e8e6ea0b2fb26ac9c498a6c522c.cloudfront.net (CloudFront)
       X-Amz-Cf-Id:
-      - HyDHKEiYCemcik19t99wyFLt9gobqBtd1GkBIekV6GXmH-pzH1UsMA==
+      - jRFOLy_s-_eVNSFsWbz4WpAWKjbNjnpLfWReacMOnXelZ783J-7WzQ==
     body:
       encoding: UTF-8
-      string: '{"photos":{"page":1,"pages":1010023,"perpage":1,"total":"1010023","photo":[{"id":"33433751038","owner":"62401943@N06","secret":"1ccce834d9","server":"7884","farm":8,"title":"Denver
-        skyline","ispublic":1,"isfriend":0,"isfamily":0}]},"stat":"ok"}'
+      string: '{"photos":{"page":1,"pages":1070103,"perpage":1,"total":"1070103","photo":[{"id":"5891370951","owner":"32742321@N06","secret":"b290560390","server":"5312","farm":6,"title":"Purple
+        Mountain Majesty","ispublic":1,"isfriend":0,"isfamily":0}]},"stat":"ok"}'
     http_version: 
-  recorded_at: Tue, 04 Jun 2019 19:17:25 GMT
+  recorded_at: Wed, 05 Jun 2019 16:43:27 GMT
 recorded_with: VCR 5.0.0

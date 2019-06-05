@@ -6,7 +6,7 @@ describe 'Background API' do
 
     expect(response).to be_successful
 
-    expected = JSON.generate({ url: 'https://farm8.staticflickr.com/7884/33433751038_1ccce834d9.jpg' })
+    expected = JSON.generate({ url: 'https://farm6.staticflickr.com/5312/5891370951_b290560390.jpg' })
 
     expect(response.body).to eq(expected)
   end
