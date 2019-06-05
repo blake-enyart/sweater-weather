@@ -13,7 +13,7 @@ class Clients::Flickr
               format: 'json',
               safe_search: 1,
               content_type: 1,
-              tags: "#{city},skyline,city",
+              tags: "#{city},#{state},skyline,city",
               license: '2,3,4,5,6,9',
               sort: 'relevance',
               nojsoncallback: 1
