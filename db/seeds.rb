@@ -5,6 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+FavoriteLocation.destroy_all
+User.destroy_all
+Location.destroy_all
+
 user = User.create(email: 'test@gmail.com', password: 'password', api_key: 'test')
 
 denver = Location.create(city: 'Denver', state: 'CO', latitude: 25.111, longitude: 25.2222)
