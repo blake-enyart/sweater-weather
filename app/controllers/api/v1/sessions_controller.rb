@@ -3,7 +3,6 @@ class Api::V1::SessionsController < ApplicationController
     request_info = JSON.parse(request.body.read, symbolize_names: true)
     user = User.find_by(email: request_info[:email])
     if user && user.authenticate(request_info[:password])
-      session[:api_key] = user.api_key
       flash[:success] = "You are now logged in as #{user.email}."
       render json: {
         api_key: user.api_key,
