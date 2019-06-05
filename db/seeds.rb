@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-create(:user, email: 'test@gmail.com', password: 'password', api_key: 'test')
+user = create(:user, email: 'test@gmail.com', password: 'password', api_key: 'test')
 
 denver = create(:location, city: 'Denver', state: 'CO', latitude: 25.111, longitude: 25.2222)
 fort_collins = create(:location, city: 'Fort Collins', state: 'CO', latitude: 50.111, longitude: 50.2222)
