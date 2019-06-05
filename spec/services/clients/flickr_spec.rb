@@ -27,7 +27,7 @@ describe Clients::Flickr do
     stub_request(:get, "https://api.flickr.com/services/rest/").
       with(body: file, headers: {})
     actual = flickr.generate_url
-    expected = 'https://farm8.staticflickr.com/7884/33433751038_1ccce834d9.jpg'
+    expected = "https://farm6.staticflickr.com/5312/5891370951_b290560390.jpg"
 
     expect(actual).to eq(expected)
   end
